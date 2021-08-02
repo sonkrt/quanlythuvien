@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="QuanLyThuVien" Class="QuanLyThuVienDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.;Initial Catalog=QuanLyThuVien;Integrated Security=True" SettingsObjectName="QuanLyThuVien.Properties.Settings" SettingsPropertyName="QuanLyThuVienConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.MUONSACH" Member="MUONSACHes">
+    <Type Name="MUONSACH">
+      <Column Name="MATHE" Type="System.String" DbType="Char(6) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MASH" Type="System.String" DbType="Char(6) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MATT" Type="System.String" DbType="Char(6)" CanBeNull="true" />
+      <Column Name="NGAYMUON" Type="System.DateTime" DbType="Date NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="NGAYTRA" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="HANTRA" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="TINHTRANG" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="TIENPHAT" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="GHICHU" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="SACH_MUONSACH" Member="SACH" ThisKey="MASH" OtherKey="MASH" Type="SACH" IsForeignKey="true" />
+      <Association Name="THETV_MUONSACH" Member="THETV" ThisKey="MATHE" OtherKey="MATHE" Type="THETV" IsForeignKey="true" />
+      <Association Name="THUTHU_MUONSACH" Member="THUTHU" ThisKey="MATT" OtherKey="MATT" Type="THUTHU" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SACH" Member="SACHes">
+    <Type Name="SACH">
+      <Column Name="MASH" Type="System.String" DbType="Char(6) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TENSH" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="MALOAI" Type="System.String" DbType="Char(6)" CanBeNull="true" />
+      <Column Name="SOLUONG" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NXB" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="NAMXB" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TACGIA" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="GIA" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="SACH_MUONSACH" Member="MUONSACHes" ThisKey="MASH" OtherKey="MASH" Type="MUONSACH" />
+      <Association Name="THELOAI_SACH" Member="THELOAI" ThisKey="MALOAI" OtherKey="MALOAI" Type="THELOAI" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TAIKHOAN" Member="TAIKHOANs">
+    <Type Name="TAIKHOAN">
+      <Column Name="TENDN" Type="System.String" DbType="NVarChar(30) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MATKHAU" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="EMAIL" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="QUYEN" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="TAIKHOAN_THUTHU" Member="THUTHUs" ThisKey="TENDN" OtherKey="TENDN" Type="THUTHU" />
+    </Type>
+  </Table>
+  <Table Name="dbo.THELOAI" Member="THELOAIs">
+    <Type Name="THELOAI">
+      <Column Name="MALOAI" Type="System.String" DbType="Char(6) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TENLOAI" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="THELOAI_SACH" Member="SACHes" ThisKey="MALOAI" OtherKey="MALOAI" Type="SACH" />
+    </Type>
+  </Table>
+  <Table Name="dbo.THETV" Member="THETVs">
+    <Type Name="THETV">
+      <Column Name="MATHE" Type="System.String" DbType="Char(6) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TENDG" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="PHAI" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Column Name="SODT" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="DIACHI" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="NGAYCAP" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="NGAYHETHAN" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="ANHTHE" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="THETV_MUONSACH" Member="MUONSACHes" ThisKey="MATHE" OtherKey="MATHE" Type="MUONSACH" />
+    </Type>
+  </Table>
+  <Table Name="dbo.THUTHU" Member="THUTHUs">
+    <Type Name="THUTHU">
+      <Column Name="MATT" Type="System.String" DbType="Char(6) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="HOTEN" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PHAI" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Column Name="DIACHI" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SODT" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="TENDN" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Association Name="THUTHU_MUONSACH" Member="MUONSACHes" ThisKey="MATT" OtherKey="MATT" Type="MUONSACH" />
+      <Association Name="TAIKHOAN_THUTHU" Member="TAIKHOAN" ThisKey="TENDN" OtherKey="TENDN" Type="TAIKHOAN" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
